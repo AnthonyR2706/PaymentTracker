@@ -1,0 +1,14 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  .app__wrapper {
+    padding-left: calc(100vw - 100%); 
+  }
+}
+th,td {
+    border: 1px solid black;
+    margin: 0px 0px;
+    padding: 5px 5px;
+}
