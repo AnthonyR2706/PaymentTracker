@@ -24,20 +24,21 @@ router.post('/contact', async (req,res) => {
     res.end()
 })
 
-router.get('/users', (req, res) => {
-    const userData = 
-    [
-        {
-            "name": "a",
-            "job": "c",
-            "test": "e"
-        },
-        {
-            "name": "b",
-            "job": "d",
-            "test": "e"
-        }
-    ]
+router.get('/users', async (req, res) => {
+    const userData = await schemas.Users.find({}, {entries:1, _id:0})
+    // const userData = 
+    // [
+    //     {
+    //         "name": "a",
+    //         "job": "c",
+    //         "test": "e"
+    //     },
+    //     {
+    //         "name": "b",
+    //         "job": "d",
+    //         "test": "e"
+    //     }
+    // ]
     res.send(userData)
 })
 

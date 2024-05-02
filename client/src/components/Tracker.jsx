@@ -28,7 +28,7 @@ const Tracker = () => {
         await axios.get('http://localhost:4000/users')
         .then(res => {
             if (processing) {
-                setData(res.data)
+                setData(res.data[0].entries)
             }
         })
         .catch(err => console.log(err))
