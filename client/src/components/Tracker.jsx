@@ -12,7 +12,7 @@ const Tracker = () => {
     //     Notes: String,
     //     Date: Date,
     //     Owed: Number,
-    //     Payed: Number
+    //     paid: Number
 
     // })
 
@@ -34,20 +34,35 @@ const Tracker = () => {
         .catch(err => console.log(err))
     }
 
-    const axiosPostData = async() => {
-        const postData = {
+    const axiosPostInfo = async() => {
+        const postInfo = {
             name: "g",
             job: "n",
             test: "z",
         }
 
-        await axios.post('http://localhost:4000/contact', postData)
+        await axios.post('http://localhost:4000/contact', postInfo)
         .then(res => setError(<p className="success">{res.data}</p>))
     }
-
+    const axiosPostData = async() => {
+        const postData = {
+            invoiceId: 2,
+            client: "Tom Fulp",
+            description: "Cleaning",
+            price: 50,
+            paid: 0
+        }
+        await axios.post('http://localhost:4000/add', postData)
+        .then(res => setError(<p className="success">{res.data}</p>))
+    }
     const handleSubmit = (e) => {
         e.preventDefault()
         axiosPostData()
+    }
+
+    const handleFirstData = (e) => {
+        e.preventDefault()
+        axiosPostInfo()
 
     }
 
@@ -67,6 +82,7 @@ const Tracker = () => {
                 </tr>
             ))}
             </table>
+            <button onClick={handleFirstData}>Add first user</button>
             <button onClick={handleSubmit}>testing</button>
             {error}
         </div>

@@ -2,13 +2,13 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 
-const entriesSchema = new Schema({
+const entrySchema = new Schema({
     invoiceId: {type:Number, required:true},
     client: {type:String, required:true},
     description: {type:String},
     date: {type:Date, default:Date.now},
     price: {type:Number, required:true},
-    payed: {type:Number}
+    paid: {type:Number, default:0}
 })
 
 const userSchema = new Schema({
@@ -17,14 +17,15 @@ const userSchema = new Schema({
     id: {type:Number, required:true},
     entryDate: {type:Date, default:Date.now},
     entries: [
-        entriesSchema
+        entrySchema
     ]
 })
 
 
 
 const Users = mongoose.model('Users', userSchema, 'users')
+const Entries = mongoose.model('Entries', entrySchema, 'entries')
 
-const mySchemas = {'Users':Users}
+const mySchemas = {'Users':Users, 'Entries':Entries}
 
 module.exports = mySchemas
