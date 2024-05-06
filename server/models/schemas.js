@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const entrySchema = new Schema({
     invoiceId: {type:Number, required:true},
     client: {type:String, required:true},
-    description: {type:String},
+    description: {type:String, default:""},
     date: {type:Date, default:Date.now},
     price: {type:Number, required:true},
     paid: {type:Number, default:0}
