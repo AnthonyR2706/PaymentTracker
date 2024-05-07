@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-
 const entrySchema = new Schema({
     invoiceId: {type:Number, required:true},
     client: {type:String, required:true},

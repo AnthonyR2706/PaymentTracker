@@ -2,18 +2,19 @@ const express = require('express')
 const router = express.Router()
 const schemas = require('../models/schemas')
 
+
 router.post('/contact', async (req, res) => {
     const userInfo = {
         username:"user",
         password:"hunter2",
         id:1,
-        entries:[{
-            invoiceId: 1,
-            client: "Brother",
-            description: "For Fun",
-            price: 10,
-            paid: 5
-        }]
+        // entries:[{
+        //     invoiceId: 1,
+        //     client: "Brother",
+        //     description: "For Fun",
+        //     price: 10,
+        //     paid: 5
+        // }]
     }
     const newUser = new schemas.Users(userInfo)
     const saveUser = await newUser.save()
@@ -25,55 +26,34 @@ router.post('/contact', async (req, res) => {
 
 router.post('/add', async (req, res) => {
     const {invoiceId, client, description, price, paid} = req.body
-    // const entry = {
-    //     invoiceId: invoiceId,
-    //     client: client,
-    //     description: description,
-    //     price: price,
-    //     paid: paid ? paid : 0
-    // }
-    
-    // const newEntry = new schemas.Entries(entry)
-    //console.log(newEntry)
-    
-    // const query = schemas.Users.where({id: 1})
-    // const y = await query.findOne()
-    //console.log(y)
-
-    // schemas.Users.findOne({id: 1})
-    //     .then((docs) => {
-    //         console.log("Results: ", docs)
-    //     })
-    //     .catch((err) => {
-    //         console.log(err)
-    //     })
-
+    const entryInfo = {
+        invoiceId: invoiceId,
+        client: client,
+        description: description,
+        price: price,
+        paid: paid
+    }
+    const newEntry = new schemas.Entries(entryInfo)
+    const validate = newEntry.validateSync()
+    if(validate != undefined){
+        var errMessage = '';
+        for (var errName in validate.errors) {
+            errMessage += validate.errors[errName].message + "\n"
+        }
+        res.send(errMessage)
+        res.end()
+        return
+    }
     const x = await schemas.Users.findOneAndUpdate(
         { id: 1 },
         {
             $push: {
-                "entries": {
-                    invoiceId: invoiceId,
-                    client: client,
-                    description: description,
-                    price: price,
-                    paid: paid
-                },
+                "entries": newEntry,
             },
         },
         { new: true },
     );
-
-
-    //console.log(x)
-
-    // const user = schemas.Users.findOne({id:1})
-    // const newUser = await user.entries.push(newEntry)
-    // console.log(user)
-    // const saveUser = newUser.save()
-    // if(saveUser){
-        res.send("Entry Added")
-    //}
+    res.send("Entry Added")
     res.end()
 })
 

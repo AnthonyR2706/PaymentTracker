@@ -4,13 +4,12 @@ import axios from "axios"
 const Tracker = () => {
 
     const [getData, setData] = useState([{}])
-    const [error, setError] = useState('')
-    const [getErrorMessage, setErrorMessage] = useState('')
-    const [getInvoiceId, setInvoiceId] = useState('')
-    const [getClient, setClient] = useState('')
-    const [getDescription, setDescription] = useState('')
-    const [getPrice, setPrice] = useState('')
-    const [getPaid, setPaid] = useState('')
+    const [getError, setError] = useState(<p/>)
+    const [getInvoiceId, setInvoiceId] = useState()
+    const [getClient, setClient] = useState()
+    const [getDescription, setDescription] = useState()
+    const [getPrice, setPrice] = useState()
+    const [getPaid, setPaid] = useState()
 
     // const UserSchema = new mongoose.Schema({
     //     name: String,
@@ -51,6 +50,9 @@ const Tracker = () => {
         .then(res => setError(<p className="success">{res.data}</p>))
     }
     const axiosPostData = async() => {
+        if(getPaid == null){
+            setPaid(0)
+        }
         const postData = {
             invoiceId: getInvoiceId,
             client: getClient,
@@ -62,12 +64,12 @@ const Tracker = () => {
         .then(res => setError(<p className="success">{res.data}</p>))
     }
     const handleSubmit = (e) => {
-        e.preventDefault()  
+        e.preventDefault()
+        axiosPostData()
         if(validateData()){
-            axiosPostData()
             setDefault()
         } else {
-            setError(<p className="error">{getErrorMessage}</p>)
+            setError(<p className="error">{getError}</p>)
             return
         }
         
@@ -86,11 +88,11 @@ const Tracker = () => {
         document.getElementById("description").value = ''
         document.getElementById("price").value = ''
         document.getElementById("paid").value = ''
-        setInvoiceId('')
-        setClient('')
-        setDescription('')
-        setPrice('')
-        setPaid('')
+        setInvoiceId(null)
+        setClient(null)
+        setDescription(null)
+        setPrice(null)
+        setPaid(null)
     }
     
     function isNumber(value) {
@@ -98,6 +100,9 @@ const Tracker = () => {
       }
     
     const validateData = () => {
+        if(getError.props.children != "Entry Added"){
+            return false
+        }
         return true
     }
 
@@ -131,7 +136,7 @@ const Tracker = () => {
                 <button onClick={handleFirstData}>Add first user</button>
                 <button onClick={handleSubmit}>Add Entry</button>
             </form>
-            {error}
+            {getError}
         </div>
     )
 }
