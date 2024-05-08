@@ -2,12 +2,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const entrySchema = new Schema({
-    invoiceId: {type:Number, required:true},
-    client: {type:String, required:true},
+    invoiceId: {type:Number, required:[true, "Please enter an Invoice Id as a number"]},
+    client: {type:String, required:[true, "Please enter a client"]},
     description: {type:String, default:""},
     date: {type:Date, default:Date.now},
-    price: {type:Number, required:true},
-    paid: {type:Number, default:0}
+    price: {type:Number, required:[true, "Please enter a price as a number"]},
+    paid: {type:Number, required:[true, "Please enter the amount paid as a number"]}
 })
 
 const userSchema = new Schema({

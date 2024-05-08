@@ -5,6 +5,7 @@ const Tracker = () => {
 
     const [getData, setData] = useState([{}])
     const [getError, setError] = useState(<p/>)
+    const [getErrorMessage, setErrorMessage] = useState([])
     const [getInvoiceId, setInvoiceId] = useState()
     const [getClient, setClient] = useState()
     const [getDescription, setDescription] = useState()
@@ -29,6 +30,10 @@ const Tracker = () => {
         }
     },[getData])
 
+    // useEffect( () => {
+
+    // })
+
     const axiosFetchData = async(processing) => {
         await axios.get('http://localhost:4000/users')
         .then(res => {
@@ -49,10 +54,8 @@ const Tracker = () => {
         await axios.post('http://localhost:4000/contact', postInfo)
         .then(res => setError(<p className="success">{res.data}</p>))
     }
+
     const axiosPostData = async() => {
-        if(getPaid == null){
-            setPaid(0)
-        }
         const postData = {
             invoiceId: getInvoiceId,
             client: getClient,
@@ -61,28 +64,31 @@ const Tracker = () => {
             paid: getPaid
         }
         await axios.post('http://localhost:4000/add', postData)
-        .then(res => setError(<p className="success">{res.data}</p>))
+        .then(res => setErrorMessage(res.data))
     }
-    const handleSubmit = (e) => {
+
+    const handleSubmit = (e) => {      
         e.preventDefault()
         axiosPostData()
         if(validateData()){
+            setError(<p className="success">{getErrorMessage}</p>)
             setDefault()
         } else {
-            setError(<p className="error">{getError}</p>)
+            console.log("error")
+            setError(getErrorMessage.map((item) =>
+                <p className="fail">{item}</p>
+              ))
             return
         }
-        
-        
     }
 
     const handleFirstData = (e) => {
         e.preventDefault()
         axiosPostInfo()
-
     }
 
     const setDefault= () => {
+        console.log("aaaaaa")
         document.getElementById("invoiceId").value = ''
         document.getElementById("client").value = ''
         document.getElementById("description").value = ''
@@ -94,16 +100,12 @@ const Tracker = () => {
         setPrice(null)
         setPaid(null)
     }
-    
-    function isNumber(value) {
-        return typeof value === 'number';
-      }
-    
+
     const validateData = () => {
-        if(getError.props.children != "Entry Added"){
+        if(Array.isArray(getErrorMessage)){
             return false
         }
-        return true
+            return true
     }
 
     return (

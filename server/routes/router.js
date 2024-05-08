@@ -36,9 +36,9 @@ router.post('/add', async (req, res) => {
     const newEntry = new schemas.Entries(entryInfo)
     const validate = newEntry.validateSync()
     if(validate != undefined){
-        var errMessage = '';
+        var errMessage = [];
         for (var errName in validate.errors) {
-            errMessage += validate.errors[errName].message + "\n"
+            errMessage.push(validate.errors[errName].message)
         }
         res.send(errMessage)
         res.end()
