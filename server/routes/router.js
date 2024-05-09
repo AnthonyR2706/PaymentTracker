@@ -60,7 +60,8 @@ router.post('/add', async (req, res) => {
 })
 
 router.get('/users', async (req, res) => {
-    const userData = await schemas.Users.find({}, {entries:1, _id:0})
+    const accountId = req.query.accountId
+    const userData = await schemas.Users.find({id:accountId}, {entries:1, _id:0})
     res.send(userData)
 })
 

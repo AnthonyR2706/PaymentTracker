@@ -11,6 +11,8 @@ const Tracker = () => {
     const [getDescription, setDescription] = useState('')
     const [getPrice, setPrice] = useState('')
     const [getPaid, setPaid] = useState('')
+    const [getAccountId, setAccountId] = useState(2)
+    const [getTempId, setTempId] = useState(2)
 
     // const UserSchema = new mongoose.Schema({
     //     name: String,
@@ -31,7 +33,9 @@ const Tracker = () => {
     },[getData])
     
     const axiosFetchData = async(processing) => {
-        await axios.get('http://localhost:4000/users')
+        let userLink = 'http://localhost:4000/users'
+        userLink += `?accountId=${getAccountId}`
+        await axios.get(userLink)
         .then(res => {
             if (processing) {
                 setData(res.data[0].entries)
@@ -102,8 +106,17 @@ const Tracker = () => {
         }
     },[setErrorMessage, getErrorMessage])
 
+    const handleAccountChange = () => {
+        setAccountId(getTempId)
+    }
+
     return (
         <div className='TrackerContainer'>
+            <form className='accountId'>
+                <label>Id</label>
+                <input id="accountId" name ="accountId" value = {getTempId} onChange={(e) => setTempId(e.target.value)} type="number" required></input>
+                <button onClick={handleAccountChange}>Change Account</button>
+            </form>
            <table>
             <tr key={"header"}>
                 {Object.keys(getData[0]).map((key) => (
@@ -118,7 +131,7 @@ const Tracker = () => {
                 </tr>
             ))}
             </table>
-            <form className="contactForm" action="http://localhost:4000/add">
+            <form className="contactForm">
                 <label>invoiceId</label>
                 <input id="invoiceId" name="invoiceId" value={getInvoiceId} onChange={(e) => setInvoiceId(e.target.value)} type="number" required></input>
                 <label>Client</label>
