@@ -5,12 +5,12 @@ const Tracker = () => {
 
     const [getData, setData] = useState([{}])
     const [getError, setError] = useState(<p/>)
-    const [getErrorMessage, setErrorMessage] = useState([])
-    const [getInvoiceId, setInvoiceId] = useState()
-    const [getClient, setClient] = useState()
-    const [getDescription, setDescription] = useState()
-    const [getPrice, setPrice] = useState()
-    const [getPaid, setPaid] = useState()
+    const [getErrorMessage, setErrorMessage] = useState('')
+    const [getInvoiceId, setInvoiceId] = useState('')
+    const [getClient, setClient] = useState('')
+    const [getDescription, setDescription] = useState('')
+    const [getPrice, setPrice] = useState('')
+    const [getPaid, setPaid] = useState('')
 
     // const UserSchema = new mongoose.Schema({
     //     name: String,
@@ -29,11 +29,7 @@ const Tracker = () => {
             processing = false
         }
     },[getData])
-
-    // useEffect( () => {
-
-    // })
-
+    
     const axiosFetchData = async(processing) => {
         await axios.get('http://localhost:4000/users')
         .then(res => {
@@ -70,16 +66,6 @@ const Tracker = () => {
     const handleSubmit = (e) => {      
         e.preventDefault()
         axiosPostData()
-        if(validateData()){
-            setError(<p className="success">{getErrorMessage}</p>)
-            setDefault()
-        } else {
-            console.log("error")
-            setError(getErrorMessage.map((item) =>
-                <p className="fail">{item}</p>
-              ))
-            return
-        }
     }
 
     const handleFirstData = (e) => {
@@ -87,26 +73,34 @@ const Tracker = () => {
         axiosPostInfo()
     }
 
+    //resets all input values
     const setDefault= () => {
-        console.log("aaaaaa")
         document.getElementById("invoiceId").value = ''
         document.getElementById("client").value = ''
         document.getElementById("description").value = ''
         document.getElementById("price").value = ''
         document.getElementById("paid").value = ''
-        setInvoiceId(null)
-        setClient(null)
-        setDescription(null)
-        setPrice(null)
-        setPaid(null)
+        setInvoiceId('')
+        setClient('')
+        setDescription('')
+        setPrice('')
+        setPaid('')
     }
 
-    const validateData = () => {
+    // Gets called to update error message after each success attempt
+    useEffect( () => {
         if(Array.isArray(getErrorMessage)){
-            return false
+            console.log("error")
+            setError(getErrorMessage.map((item) =>
+                <p className="fail">{item}</p>
+              ))
+        } else {
+            console.log("success")
+            setError(<p className="success">{getErrorMessage}</p>)
+            setDefault()
+            
         }
-            return true
-    }
+    },[setErrorMessage, getErrorMessage])
 
     return (
         <div className='TrackerContainer'>

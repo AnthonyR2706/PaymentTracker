@@ -40,6 +40,7 @@ router.post('/add', async (req, res) => {
         for (var errName in validate.errors) {
             errMessage.push(validate.errors[errName].message)
         }
+        console.log(errMessage)
         res.send(errMessage)
         res.end()
         return
@@ -54,6 +55,7 @@ router.post('/add', async (req, res) => {
         { new: true },
     );
     res.send("Entry Added")
+    console.log("Entry Added")
     res.end()
 })
 
