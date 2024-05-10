@@ -8,7 +8,7 @@ const entrySchema = new Schema({
     date: {type:Date, default:Date.now},
     price: {type:Number, required:[true, "Please enter a price as a number"]},
     paid: {type:Number, required:[true, "Please enter the amount paid as a number"]}
-})
+}, { _id : false })
 
 const userSchema = new Schema({
     username: {type:String, required:true},

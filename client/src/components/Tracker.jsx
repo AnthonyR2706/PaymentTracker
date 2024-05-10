@@ -11,8 +11,9 @@ const Tracker = () => {
     const [getDescription, setDescription] = useState('')
     const [getPrice, setPrice] = useState('')
     const [getPaid, setPaid] = useState('')
-    const [getAccountId, setAccountId] = useState(2)
-    const [getTempId, setTempId] = useState(2)
+    const [getAccountId, setAccountId] = useState(3)
+    const [getTempId, setTempId] = useState(3)
+    const [loggedIn, setLoggedIn] = useState(false)
 
     // const UserSchema = new mongoose.Schema({
     //     name: String,
@@ -61,7 +62,8 @@ const Tracker = () => {
             client: getClient,
             description: getDescription,
             price: getPrice,
-            paid: getPaid
+            paid: getPaid,
+            accountId: getAccountId
         }
         await axios.post('http://localhost:4000/add', postData)
         .then(res => setErrorMessage(res.data))
@@ -119,9 +121,12 @@ const Tracker = () => {
             </form>
            <table>
             <tr key={"header"}>
-                {Object.keys(getData[0]).map((key) => (
-                <th>{key}</th>
-                ))}
+                <th>Invoice ID</th>
+                <th>Client</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Price</th>
+                <th>Paid</th>
             </tr>
             {getData.map((item) => (
                 <tr key={item.id}>

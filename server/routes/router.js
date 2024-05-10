@@ -25,7 +25,7 @@ router.post('/contact', async (req, res) => {
 })
 
 router.post('/add', async (req, res) => {
-    const {invoiceId, client, description, price, paid} = req.body
+    const {invoiceId, client, description, price, paid, accountId} = req.body
     const entryInfo = {
         invoiceId: invoiceId,
         client: client,
@@ -46,7 +46,7 @@ router.post('/add', async (req, res) => {
         return
     }
     const x = await schemas.Users.findOneAndUpdate(
-        { id: 1 },
+        { id: accountId },
         {
             $push: {
                 "entries": newEntry,
@@ -61,7 +61,7 @@ router.post('/add', async (req, res) => {
 
 router.get('/users', async (req, res) => {
     const accountId = req.query.accountId
-    const userData = await schemas.Users.find({id:accountId}, {entries:1, _id:0})
+    const userData = await schemas.Users.find({id:accountId}, {entries:1, _id:0, })
     res.send(userData)
 })
 
