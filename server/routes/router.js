@@ -5,9 +5,9 @@ const schemas = require('../models/schemas')
 
 router.post('/contact', async (req, res) => {
     const userInfo = {
-        username:"user",
-        password:"hunter2",
-        id:1,
+        username:"userrrr",
+        password:"hunter5",
+        id:4,
         // entries:[{
         //     invoiceId: 1,
         //     client: "Brother",
@@ -26,8 +26,16 @@ router.post('/contact', async (req, res) => {
 
 router.post('/add', async (req, res) => {
     const {invoiceId, client, description, price, paid, accountId} = req.body
+    schemas.Users.findOneAndUpdate(
+        { id: accountId },
+        {$inc: { curInvoiceId: 1 }}
+    )
+    const newInvoiceId = schemas.Users.findOne(
+        { id: accountId }
+    ).then.curInvoiceId
+    console.log(newInvoiceId)
     const entryInfo = {
-        invoiceId: invoiceId,
+        invoiceId: newInvoiceId,
         client: client,
         description: description,
         price: price,
