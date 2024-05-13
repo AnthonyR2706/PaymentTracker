@@ -30,12 +30,14 @@ router.post('/add', async (req, res) => {
         { id: accountId },
         {$inc: { curInvoiceId: 1 }}
     )
-    const newInvoiceId = schemas.Users.findOne(
+    const query = schemas.Users.findOne(
         { id: accountId }
-    ).then.curInvoiceId
-    console.log(newInvoiceId)
+    )
+    query.select('curInvoiceId -_id')
+    const newInvoiceId = await query.exec()
+    console.log(newInvoiceId.curInvoiceId)
     const entryInfo = {
-        invoiceId: newInvoiceId,
+        invoiceId: newInvoiceId.curInvoiceId,
         client: client,
         description: description,
         price: price,

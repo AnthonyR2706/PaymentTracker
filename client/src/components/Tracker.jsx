@@ -81,7 +81,6 @@ const Tracker = () => {
 
     //resets all input values
     const setDefault= () => {
-        document.getElementById("invoiceId").value = ''
         document.getElementById("client").value = ''
         document.getElementById("description").value = ''
         document.getElementById("price").value = ''
@@ -137,8 +136,6 @@ const Tracker = () => {
             ))}
             </table>
             <form className="contactForm">
-                <label>invoiceId</label>
-                <input id="invoiceId" name="invoiceId" value={getInvoiceId} onChange={(e) => setInvoiceId(e.target.value)} type="number" required></input>
                 <label>Client</label>
                 <input id="client" name="client" value={getClient} onChange={(e) => setClient(e.target.value)} required></input>
                 <label>Description</label>
