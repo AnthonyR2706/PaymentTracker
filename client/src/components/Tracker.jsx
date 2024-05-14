@@ -1,19 +1,16 @@
 import { React, useState, useEffect } from 'react'
 import axios from "axios"
 
-const Tracker = () => {
+const Tracker = ({getAccountId, setAccountId}) => {
 
     const [getData, setData] = useState([{}])
     const [getError, setError] = useState(<p/>)
     const [getErrorMessage, setErrorMessage] = useState('')
-    const [getInvoiceId, setInvoiceId] = useState('')
     const [getClient, setClient] = useState('')
     const [getDescription, setDescription] = useState('')
     const [getPrice, setPrice] = useState('')
     const [getPaid, setPaid] = useState('')
-    const [getAccountId, setAccountId] = useState(4)
     const [getTempId, setTempId] = useState(4)
-    const [loggedIn, setLoggedIn] = useState(false)
 
     // const UserSchema = new mongoose.Schema({
     //     name: String,
@@ -58,7 +55,6 @@ const Tracker = () => {
 
     const axiosPostData = async() => {
         const postData = {
-            invoiceId: getInvoiceId,
             client: getClient,
             description: getDescription,
             price: getPrice,
@@ -85,7 +81,6 @@ const Tracker = () => {
         document.getElementById("description").value = ''
         document.getElementById("price").value = ''
         document.getElementById("paid").value = ''
-        setInvoiceId('')
         setClient('')
         setDescription('')
         setPrice('')

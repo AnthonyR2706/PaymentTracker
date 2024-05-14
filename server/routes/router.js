@@ -25,11 +25,11 @@ router.post('/contact', async (req, res) => {
 })
 
 router.post('/add', async (req, res) => {
-    const {invoiceId, client, description, price, paid, accountId} = req.body
+    const {client, description, price, paid, accountId} = req.body
     schemas.Users.findOneAndUpdate(
         { id: accountId },
-        {$inc: { curInvoiceId: 1 }}
-    )
+        {$inc: { "curInvoiceId": 1 }}
+    ).exec()
     const query = schemas.Users.findOne(
         { id: accountId }
     )
@@ -73,6 +73,26 @@ router.get('/users', async (req, res) => {
     const accountId = req.query.accountId
     const userData = await schemas.Users.find({id:accountId}, {entries:1, _id:0, })
     res.send(userData)
+})
+
+router.post('/signup', async (req, res) => {
+    const {username, password} = req.body
+    const userInfo = {
+        username: username,
+        password: password,
+        id:4,
+    }
+    const newUser = new schemas.Users(userInfo)
+    const saveUser = await newUser.save()
+    if(saveUser){
+        res.send("worked")
+    }
+    res.end()
+})
+router.get('/login', async (req, res) => {
+    const {username, password} = req.body
+    const userId = await schemas.Users.find({username: username, password: password}, {_id:1})
+    res.send(userId)
 })
 
 module.exports = router
