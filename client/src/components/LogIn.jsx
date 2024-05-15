@@ -11,13 +11,32 @@ const initialState = {
 const LogIn = ({isLoggedIn, setLoggedIn, getAccountId, setAccountId}) => {
     const [form, setForm] = useState(initialState)
     const [isSignup, setIsSignup] = useState(false)
+    const [error, setError] = useState()
 
     const switchMode = () => {
         setIsSignup((prevIsSignup) => !prevIsSignup)
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async(e) => {
+        e.preventDefault()
+        let link = 'http://localhost:4000/'
+        link += (isSignup ? 'signup' : 'login') +`?username=${form.username}&password=${form.password}&confirmPassword=${form.confirmPassword}`
+        await axios.get(link)
+        .then(res => {
+            setError(res.data)
+            if(res.data == "success") {
+                console.log("here")
+                handleSignUp(link)
+            }
+        })
+    }
 
+    const handleSignUp = async(link) => {
+        console.log(link)
+        await axios.post(link)
+        .then(res => {
+            console.log(res.data)
+        })
     }
 
     const handleChange = (e) => {
@@ -75,6 +94,7 @@ const LogIn = ({isLoggedIn, setLoggedIn, getAccountId, setAccountId}) => {
                     <p className = "authFromFieldsSwitch" onClick = {switchMode}>
                         {isSignup ? "Sign In Instead" : "Sign Up Instead"}
                     </p>
+                    <p>{error}</p>
                 </center>
             </div>
     </div>

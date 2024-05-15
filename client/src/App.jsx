@@ -5,12 +5,6 @@ const App = () => {
   const [isLoggedIn, setLoggedIn] = useState(false)
   const [getAccountId, setAccountId] = useState('')
 
-  const propPack = {
-    isLoggedIn: isLoggedIn,
-    setLoggedIn: setLoggedIn,
-    getAccountId: getAccountId,
-    setAccountId: setAccountId
-  };
 
   return (
     <div>
