@@ -17,25 +17,48 @@ const LogIn = ({isLoggedIn, setLoggedIn, getAccountId, setAccountId}) => {
         setIsSignup((prevIsSignup) => !prevIsSignup)
     }
 
-    const handleSubmit = async(e) => {
+    const setAuthLink = (e) => {
         e.preventDefault()
+
         let link = 'http://localhost:4000/'
         link += (isSignup ? 'signup' : 'login') +`?username=${form.username}&password=${form.password}&confirmPassword=${form.confirmPassword}`
+        isSignup ? handleSignUp(link) : handleLogin(link)
+    }
+
+    const handleSignUp = async(link) => {
+
+        
         await axios.get(link)
         .then(res => {
             setError(res.data)
             if(res.data == "success") {
-                console.log("here")
-                handleSignUp(link)
+                handleAuth(link)
             }
         })
     }
 
-    const handleSignUp = async(link) => {
+    const handleLogin = async (link) => {
+
+        
+        await axios.get(link)
+        .then(res => {
+            if(res.data != "error") {
+                setAccountId(res.data)
+                setLoggedIn(true)
+            } else {
+                setError("Username or Password is incorrect")
+            }
+        })
+        
+    }
+
+    const handleAuth = async(link) => {
         console.log(link)
         await axios.post(link)
         .then(res => {
             console.log(res.data)
+            setAccountId(res.data)
+            setLoggedIn(true)
         })
     }
 
@@ -49,7 +72,7 @@ const LogIn = ({isLoggedIn, setLoggedIn, getAccountId, setAccountId}) => {
         <center>
             {isSignup ? "Signup" : "Sign In"}
         </center>
-            <form onSubmit = {handleSubmit}>
+            <form onSubmit = {setAuthLink}>
                 <label htmlFor = "username">
                     Username
                 </label>

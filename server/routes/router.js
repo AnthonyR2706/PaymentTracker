@@ -2,47 +2,18 @@ const express = require('express')
 const router = express.Router()
 const schemas = require('../models/schemas')
 
-
-//Creates user for testing purposes
-
-router.post('/contact', async (req, res) => {
-    const userInfo = {
-        username:"userrrr",
-        password:"hunter5",
-        id:4,
-        // entries:[{
-        //     invoiceId: 1,
-        //     client: "Brother",
-        //     description: "For Fun",
-        //     price: 10,
-        //     paid: 5
-        // }]
-    }
-    const newUser = new schemas.Users(userInfo)
-    const saveUser = await newUser.save()
-    if(saveUser){
-        res.send("worked")
-    }
-    res.end()
-})
-
-
 //Add entry
 
 router.post('/add', async (req, res) => {
     const {client, description, price, paid, accountId} = req.body
-    schemas.Users.findOneAndUpdate(
-        { id: accountId },
-        {$inc: { "curInvoiceId": 1 }}
-    ).exec()
-    const query = schemas.Users.findOne(
-        { id: accountId }
+    const invoiceQuery = schemas.Users.findOne(
+        { _id: accountId }
     )
-    query.select('curInvoiceId -_id')
-    const newInvoiceId = await query.exec()
-    console.log(newInvoiceId.curInvoiceId)
+    invoiceQuery.select('curInvoiceId -_id')
+    const invoiceId = await invoiceQuery.exec()
+    console.log(invoiceId.curInvoiceId)
     const entryInfo = {
-        invoiceId: newInvoiceId.curInvoiceId,
+        invoiceId: invoiceId.curInvoiceId,
         client: client,
         description: description,
         price: price,
@@ -60,8 +31,17 @@ router.post('/add', async (req, res) => {
         res.end()
         return
     }
+    schemas.Users.findOneAndUpdate(
+        { _id: accountId },
+        {$inc: { "curInvoiceId": 1 }}
+    ).exec()
+    const query = schemas.Users.findOne(
+        { id: accountId }
+    )
+    query.select('curInvoiceId -_id')
+    const newInvoiceId = await query.exec()
     const x = await schemas.Users.findOneAndUpdate(
-        { id: accountId },
+        { _id: accountId },
         {
             $push: {
                 "entries": newEntry,
@@ -78,7 +58,7 @@ router.post('/add', async (req, res) => {
 
 router.get('/users', async (req, res) => {
     const accountId = req.query.accountId
-    const userData = await schemas.Users.find({id:accountId}, {entries:1, _id:0, })
+    const userData = await schemas.Users.find({_id:accountId}, {entries:1, _id:0, })
     res.send(userData)
 })
 
@@ -125,9 +105,20 @@ router.post('/signup', async (req, res) => {
 //Login
 
 router.get('/login', async (req, res) => {
-    const {username, password} = req.body
-    const userId = await schemas.Users.find({username: username, password: password}, {_id:1})
-    res.send(userId)
+    const username = req.query.username
+    const password = req.query.password
+    const idQuery = schemas.Users.findOne(
+        { username: username, password: password }
+    )
+    idQuery.select('_id')
+    const userId = await idQuery.exec()
+    console.log(userId)
+    if(userId == null){
+        res.send("error")
+    }
+    else {
+        res.send(userId._id)
+    }
 })
 
 module.exports = router

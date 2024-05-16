@@ -42,17 +42,6 @@ const Tracker = ({getAccountId, setAccountId}) => {
         .catch(err => console.log(err))
     }
 
-    const axiosPostInfo = async() => {
-        const postInfo = {
-            name: "g",
-            job: "n",
-            test: "z",
-        }
-
-        await axios.post('http://localhost:4000/contact', postInfo)
-        .then(res => setError(<p className="success">{res.data}</p>))
-    }
-
     const axiosPostData = async() => {
         const postData = {
             client: getClient,
@@ -70,13 +59,9 @@ const Tracker = ({getAccountId, setAccountId}) => {
         axiosPostData()
     }
 
-    const handleFirstData = (e) => {
-        e.preventDefault()
-        axiosPostInfo()
-    }
-
     //resets all input values
     const setDefault= () => {
+        console.log("reset")
         document.getElementById("client").value = ''
         document.getElementById("description").value = ''
         document.getElementById("price").value = ''
@@ -85,6 +70,7 @@ const Tracker = ({getAccountId, setAccountId}) => {
         setDescription('')
         setPrice('')
         setPaid('')
+        setErrorMessage('')
     }
 
     // Gets called to update error message after each success attempt
@@ -95,8 +81,7 @@ const Tracker = ({getAccountId, setAccountId}) => {
                 <p className="fail">{item}</p>
               ))
         } else {
-            console.log("success")
-            setError(<p className="success">{getErrorMessage}</p>)
+            setError()
             setDefault()
             
         }
@@ -139,7 +124,6 @@ const Tracker = ({getAccountId, setAccountId}) => {
                 <input id="price" name="price" value={getPrice} onChange={(e) => setPrice(e.target.value)} type="number" required></input>
                 <label>Paid</label>
                 <input id="paid" name="paid" value={getPaid} onChange={(e) => setPaid(e.target.value)} type="number"></input>
-                <button onClick={handleFirstData}>Add first user</button>
                 <button onClick={handleSubmit}>Add Entry</button>
             </form>
             {getError}
