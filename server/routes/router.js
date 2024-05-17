@@ -68,7 +68,7 @@ router.get('/signup', async (req, res) => {
     const username = req.query.username
     const password = req.query.password
     const confirmPassword = req.query.confirmPassword
-    const userExist = await schemas.Users.exists({ username:username, password:password });
+    const userExist = await schemas.Users.exists({ username:username });
     console.log(username)
     console.log(password)
     console.log(confirmPassword)
@@ -119,6 +119,17 @@ router.get('/login', async (req, res) => {
     else {
         res.send(userId._id)
     }
+})
+
+//Delete Row
+
+router.post('/delete', async (req, res) => {
+    const invoiceId = req.query.invoiceId
+    const accountId = req.query.accountId
+    const x = await schemas.Users.findOneAndUpdate(
+        { _id: accountId },
+            { $pull: { entries: { invoiceId: invoiceId } } } 
+        ).exec()
 })
 
 module.exports = router

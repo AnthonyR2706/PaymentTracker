@@ -54,6 +54,10 @@ const Tracker = ({getAccountId, setAccountId}) => {
         .then(res => setErrorMessage(res.data))
     }
 
+    const axiosDeleteData = async(key) => {
+        await axios.post(`http://localhost:4000/delete?invoiceId=${key}&accountId=${getAccountId}`)
+    }
+
     const handleSubmit = (e) => {      
         e.preventDefault()
         axiosPostData()
@@ -61,7 +65,6 @@ const Tracker = ({getAccountId, setAccountId}) => {
 
     //resets all input values
     const setDefault= () => {
-        console.log("reset")
         document.getElementById("client").value = ''
         document.getElementById("description").value = ''
         document.getElementById("price").value = ''
@@ -87,17 +90,21 @@ const Tracker = ({getAccountId, setAccountId}) => {
         }
     },[setErrorMessage, getErrorMessage])
 
-    const handleAccountChange = () => {
-        setAccountId(getTempId)
+    const handleDelete = (key) => {
+        axiosDeleteData(key)
+        const data = getData
+        const index = getRow(data, key)
+        const firstHalf = data.slice(0, index)
+        const secondHalf = data.slice(index + 1)
+        setData(firstHalf.concat(secondHalf))
     }
+
+    function getRow(data, key) {
+        return data.findIndex(obj => obj.invoiceId == key)
+      }
 
     return (
         <div className='TrackerContainer'>
-            <form className='accountId'>
-                <label>Id</label>
-                <input id="accountId" name ="accountId" value = {getTempId} onChange={(e) => setTempId(e.target.value)} type="number" required></input>
-                <button onClick={handleAccountChange}>Change Account</button>
-            </form>
            <table>
             <tr key={"header"}>
                 <th>Invoice ID</th>
@@ -108,10 +115,13 @@ const Tracker = ({getAccountId, setAccountId}) => {
                 <th>Paid</th>
             </tr>
             {getData.map((item) => (
-                <tr key={item.id}>
+                <tr key={item.invoiceId}>
                 {Object.values(item).map((val) => (
                     <td>{val}</td>
                 ))}
+                <td><button>Edit</button></td>
+                <td><button onClick={e => handleDelete(item.invoiceId)}>Delete</button></td>
+                <td>{item.invoiceId}</td>
                 </tr>
             ))}
             </table>

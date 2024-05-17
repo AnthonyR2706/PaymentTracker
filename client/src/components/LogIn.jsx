@@ -53,7 +53,6 @@ const LogIn = ({isLoggedIn, setLoggedIn, getAccountId, setAccountId}) => {
     }
 
     const handleAuth = async(link) => {
-        console.log(link)
         await axios.post(link)
         .then(res => {
             console.log(res.data)
@@ -64,7 +63,6 @@ const LogIn = ({isLoggedIn, setLoggedIn, getAccountId, setAccountId}) => {
 
     const handleChange = (e) => {
         setForm({...form, [e.target.name]: e.target.value})
-        console.log(form)
     }
 
   return (
