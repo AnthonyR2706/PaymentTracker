@@ -10,7 +10,14 @@ const Tracker = ({getAccountId, setAccountId}) => {
     const [getDescription, setDescription] = useState('')
     const [getPrice, setPrice] = useState('')
     const [getPaid, setPaid] = useState('')
-    const [getKey, setKey] = useState()
+    const [getKey, setKey] = useState('')
+    const [getEditForm, setEditForm] = useState({
+        client: "",
+        description: "",
+        price: "",
+        paid: "",
+    })
+    const [getHidden, sethidden] = useState(true)
 
     // const UserSchema = new mongoose.Schema({
     //     name: String,
@@ -100,6 +107,39 @@ const Tracker = ({getAccountId, setAccountId}) => {
         document.getElementById("confirmBox").classList.toggle('hidden')
     }
 
+    const toggleEdit = (key) => {
+        document.getElementById("editBox").classList.toggle('hidden')
+        if(getHidden){
+            const data = getData
+            const rowData = data[getRow(data, key)]
+            setEditForm({
+                client: rowData.client,
+                description: rowData.description,
+                price: rowData.price,
+                paid: rowData.paid,
+            })
+            setKey(key) 
+        }
+        sethidden(!getHidden)
+    }
+
+    const handleEdit = () => {
+        axiosEditData(getKey)
+        document.getElementById("editBox").classList.toggle('hidden')
+    }
+
+    const axiosEditData = async(key) => {
+        await axios.post(`http://localhost:4000/edit?invoiceId=${key}&accountId=${getAccountId}`, getEditForm)
+    }
+
+    function getRow(data, key) {
+        return data.findIndex(obj => obj.invoiceId == key)
+      }
+
+    const handleEditFormChange = (e) => {
+        setEditForm({...getEditForm, [e.target.name]: e.target.value})
+    }
+
     return (
         <div className='TrackerContainer'>
            <table>
@@ -116,9 +156,8 @@ const Tracker = ({getAccountId, setAccountId}) => {
                 {Object.values(item).map((val) => (
                     <td>{val}</td>
                 ))}
-                <td><button>Edit</button></td>
+                <td><button onClick={e => toggleEdit(item.invoiceId)}>Edit</button></td>
                 <td><button onClick={e => toggleConfirm(item.invoiceId)}>Delete</button></td>
-                <td>{item.invoiceId}</td>
                 </tr>
             ))}
             </table>
@@ -139,6 +178,40 @@ const Tracker = ({getAccountId, setAccountId}) => {
                 <button onClick={toggleConfirm}>Cancel</button>
                 <button onClick={handleDelete}>Delete</button>
             </div>
+            <div className='editBox hidden' id='editBox'>
+                <button onClick={toggleEdit}>Cancel</button>
+                <form className="contactForm">
+                <label>Client</label>
+                <input 
+                    name="client" 
+                    value={getEditForm.client}
+                    onChange = {handleEditFormChange}
+                    required
+                ></input>
+                <label>Description</label>
+                <input 
+                    name="description" 
+                    value={getEditForm.description}
+                    onChange = {handleEditFormChange}
+                    required
+                ></input>
+                <label>Price</label>
+                <input 
+                    name="price" 
+                    value={getEditForm.price}
+                    onChange = {handleEditFormChange}
+                    required
+                ></input>
+                <label>Paid</label>
+                <input 
+                    name="paid" 
+                    placeholder={getEditForm.paid}
+                    onChange = {handleEditFormChange}
+                    required
+                ></input>
+                <button onClick={handleEdit}>Confirm</button>
+            </form>
+            </div>  
         </div>
     )
 }

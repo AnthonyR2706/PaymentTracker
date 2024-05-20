@@ -132,4 +132,22 @@ router.post('/delete', async (req, res) => {
         ).exec()
 })
 
+router.post('/edit', async (req, res) => {
+    const {client, description, price, paid} = req.body
+    const invoiceId = req.query.invoiceId
+    const accountId = req.query.accountId
+    const x = await schemas.Users.findOneAndUpdate(
+        { _id: accountId, 'entries.invoiceId': invoiceId },
+            { $set: { 
+
+                    'entries.$.client': client,
+                    'entries.$.description': description,
+                    'entries.$.price': price,
+                    'entries.$.paid': paid 
+                
+            } 
+        } 
+        ).exec()
+})
+
 module.exports = router
