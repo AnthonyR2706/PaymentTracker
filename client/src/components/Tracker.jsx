@@ -10,7 +10,7 @@ const Tracker = ({getAccountId, setAccountId}) => {
     const [getDescription, setDescription] = useState('')
     const [getPrice, setPrice] = useState('')
     const [getPaid, setPaid] = useState('')
-    const [getTempId, setTempId] = useState(4)
+    const [getKey, setKey] = useState()
 
     // const UserSchema = new mongoose.Schema({
     //     name: String,
@@ -90,18 +90,15 @@ const Tracker = ({getAccountId, setAccountId}) => {
         }
     },[setErrorMessage, getErrorMessage])
 
-    const handleDelete = (key) => {
-        axiosDeleteData(key)
-        const data = getData
-        const index = getRow(data, key)
-        const firstHalf = data.slice(0, index)
-        const secondHalf = data.slice(index + 1)
-        setData(firstHalf.concat(secondHalf))
+    const toggleConfirm = (key) => {
+        document.getElementById("confirmBox").classList.toggle('hidden')
+        setKey(key) 
     }
 
-    function getRow(data, key) {
-        return data.findIndex(obj => obj.invoiceId == key)
-      }
+    const handleDelete = () => {
+        axiosDeleteData(getKey)
+        document.getElementById("confirmBox").classList.toggle('hidden')
+    }
 
     return (
         <div className='TrackerContainer'>
@@ -120,7 +117,7 @@ const Tracker = ({getAccountId, setAccountId}) => {
                     <td>{val}</td>
                 ))}
                 <td><button>Edit</button></td>
-                <td><button onClick={e => handleDelete(item.invoiceId)}>Delete</button></td>
+                <td><button onClick={e => toggleConfirm(item.invoiceId)}>Delete</button></td>
                 <td>{item.invoiceId}</td>
                 </tr>
             ))}
@@ -137,6 +134,11 @@ const Tracker = ({getAccountId, setAccountId}) => {
                 <button onClick={handleSubmit}>Add Entry</button>
             </form>
             {getError}
+            <div className='confirmBox hidden' id='confirmBox'>
+                Are you sure you want to delete this entry?
+                <button onClick={toggleConfirm}>Cancel</button>
+                <button onClick={handleDelete}>Delete</button>
+            </div>
         </div>
     )
 }
