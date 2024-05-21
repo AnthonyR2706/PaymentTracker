@@ -38,7 +38,7 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
     },[getData])
     
     const axiosFetchData = async(processing) => {
-        let userLink = 'http://localhost:4000/users'
+        let userLink = 'https://paymenttracker.onrender.com/users'
         userLink += `?accountId=${getAccountId}`
         await axios.get(userLink)
         .then(res => {
@@ -57,12 +57,12 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
             paid: getPaid,
             accountId: getAccountId
         }
-        await axios.post('http://localhost:4000/add', postData)
+        await axios.post('https://paymenttracker.onrender.com/add', postData)
         .then(res => setErrorMessage(res.data))
     }
 
     const axiosDeleteData = async(key) => {
-        await axios.post(`http://localhost:4000/delete?invoiceId=${key}&accountId=${getAccountId}`)
+        await axios.post(`https://paymenttracker.onrender.com/delete?invoiceId=${key}&accountId=${getAccountId}`)
     }
 
     const handleSubmit = (e) => {      
@@ -129,7 +129,7 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
     }
 
     const axiosEditData = async(key) => {
-        await axios.post(`http://localhost:4000/edit?invoiceId=${key}&accountId=${getAccountId}`, getEditForm)
+        await axios.post(`https://paymenttracker.onrender.com/edit?invoiceId=${key}&accountId=${getAccountId}`, getEditForm)
     }
 
     function getRow(data, key) {

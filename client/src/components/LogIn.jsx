@@ -20,7 +20,7 @@ const LogIn = ({isLoggedIn, setLoggedIn, getAccountId, setAccountId}) => {
     const setAuthLink = (e) => {
         e.preventDefault()
 
-        let link = 'http://localhost:4000/'
+        let link = 'https://paymenttracker.onrender.com/'
         link += (isSignup ? 'signup' : 'login') +`?username=${form.username}&password=${form.password}&confirmPassword=${form.confirmPassword}`
         isSignup ? handleSignUp(link) : handleLogin(link)
     }
