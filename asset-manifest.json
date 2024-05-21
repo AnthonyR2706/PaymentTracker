@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/PaymentTracker/static/css/main.23bf2b2a.css",
+    "main.js": "/PaymentTracker/static/js/main.e18f7314.js",
+    "index.html": "/PaymentTracker/index.html",
+    "main.23bf2b2a.css.map": "/PaymentTracker/static/css/main.23bf2b2a.css.map",
+    "main.e18f7314.js.map": "/PaymentTracker/static/js/main.e18f7314.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.23bf2b2a.css",
+    "static/js/main.e18f7314.js"
+  ]
+}
