@@ -120,7 +120,7 @@ const LogIn = ({isLoggedIn, setLoggedIn, getAccountId, setAccountId}) => {
             </div>
             This website does not work with Firefox, please use Chrome or a different browser.
             <br/>
-            If you want to use Fire fox you will have to go to about:config and change "network.cors_preflight.allow_client_cert:" to true
+            If you want to use Firefox you will have to go to about:config and change "network.cors_preflight.allow_client_cert:" to true
     </div>
   )
 }
