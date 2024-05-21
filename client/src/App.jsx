@@ -14,6 +14,7 @@ const App = () => {
             <Tracker
               getAccountId = {getAccountId}
               setAccountId = {setAccountId}
+              setLoggedIn = {setLoggedIn}
             /> : 
             <LogIn
             isLoggedIn = {isLoggedIn}

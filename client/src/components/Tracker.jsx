@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import axios from "axios"
 
-const Tracker = ({getAccountId, setAccountId}) => {
+const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
 
     const [getData, setData] = useState([{}])
     const [getError, setError] = useState(<p/>)
@@ -140,6 +140,11 @@ const Tracker = ({getAccountId, setAccountId}) => {
         setEditForm({...getEditForm, [e.target.name]: e.target.value})
     }
 
+    const handleLogOut = () => {
+        setAccountId('')
+        setLoggedIn(false)
+    }
+
     return (
         <div className='TrackerContainer'>
            <table>
@@ -211,6 +216,9 @@ const Tracker = ({getAccountId, setAccountId}) => {
                 ></input>
                 <button onClick={handleEdit}>Confirm</button>
             </form>
+            </div>
+            <div>
+                <button onClick={handleLogOut}>Log Out</button>
             </div>  
         </div>
     )
