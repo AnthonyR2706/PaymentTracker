@@ -210,11 +210,11 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
                 <label>Paid</label>
                 <input 
                     name="paid" 
-                    placeholder={getEditForm.paid}
+                    value={getEditForm.paid}
                     onChange = {handleEditFormChange}
                     required
                 ></input>
-                <button onClick={handleEdit}>Confirm</button>
+                <button type='button' onClick={handleEdit}>Confirm</button>
             </form>
             </div>
             <div>
