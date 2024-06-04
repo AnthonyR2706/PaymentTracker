@@ -118,9 +118,11 @@ const LogIn = ({isLoggedIn, setLoggedIn, getAccountId, setAccountId}) => {
                     <p>{error}</p>
                 </center>
             </div>
-            This website does not work with Firefox, please use Chrome or a different browser.
+            This website does not work properly with Firefox, please use Chrome or a different browser.
             <br/>
             If you want to use Firefox you will have to go to about:config and change "network.cors_preflight.allow_client_cert:" to true
+            <br/>
+            This website uses the free tier or render to host the server side. Please allow for around a minute for it to start up.
     </div>
   )
 }
