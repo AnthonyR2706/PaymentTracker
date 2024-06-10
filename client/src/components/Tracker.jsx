@@ -124,8 +124,9 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
     }
 
     const handleEdit = () => {
-        axiosEditData(getKey)
-        document.getElementById("editBox").classList.toggle('hidden')
+        let key = getKey
+        axiosEditData(key)
+        toggleEdit(key)
     }
 
     const axiosEditData = async(key) => {
