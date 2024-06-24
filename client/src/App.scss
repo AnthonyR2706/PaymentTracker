@@ -1,11 +1,66 @@
+$Primary: #D8EFD3;
+$Secondary: #95D2B3;
+$Tertiary: #55AD9B;
+$Quaternary: #F1F8E8;
+
 html,
 body {
   margin: 0;
   padding: 0;
   height: auto;
+  background: $Primary;
   .app__wrapper {
-    padding-left: calc(100vw - 100%); 
+    padding-left: calc(100vw - 100%);
   }
+  .appHeader {
+    background: $Tertiary;
+    margin: 0;
+    padding: .5rem;
+    color: $Quaternary
+  }
+  .formContainer {
+    background: $Secondary;
+    font-size: 20px;
+    font-weight: bold;
+    width: 30%;
+    min-width: 300px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 20px;
+    padding: 20px;
+    height: 100%;
+    .loginField {
+      background: $Quaternary;
+      font-size: 15px;
+      width: 50%;
+      height: 30px;
+      margin: 10px;
+      border: none;
+      background-clip: content-box
+    }
+    .authFormFieldsContentB {
+      width: 50%;
+      padding: 2px;
+      margin: 10px;
+      .authFormSubmit {
+        border: none;
+        width: 100%;
+        height: 30px;
+      }
+    }
+    .authFromFieldsSwitch {
+      cursor: pointer;
+      width: 180px;
+      margin: 10px;
+    }
+  }
+  .extraText, .workInProgress {
+    position: absolute;
+    bottom: 10px;
+  }
+  .workInProgress {
+    right: 10px;
+  } 
 }
 th,td {
     border: 1px solid black;

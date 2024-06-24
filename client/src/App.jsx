@@ -9,7 +9,7 @@ const App = () => {
   return (
     <div>
         <div className='app_wrapper'>
-            <h1>Payment Tracker</h1>
+            <h1 className='appHeader'>Payment Tracker</h1>
             {isLoggedIn ? 
             <Tracker
               getAccountId = {getAccountId}

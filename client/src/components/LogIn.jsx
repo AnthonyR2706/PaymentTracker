@@ -66,47 +66,52 @@ const LogIn = ({isLoggedIn, setLoggedIn, getAccountId, setAccountId}) => {
     }
 
   return (
-    <div>
-        <center>
-            {isSignup ? "Signup" : "Sign In"}
-        </center>
+    <div className='loginWrapper'>
+        <center className='formContainer'>
             <form onSubmit = {setAuthLink}>
                 <label htmlFor = "username">
                     Username
                 </label>
+                <br/>
                 <input 
                     name = "username"
                     type = "text"
                     placeholder = "Username"
                     onChange = {handleChange}
                     required
+                    className='loginField'
                 />
+                <br/>
                 <label htmlFor = "password">
                     Password
                 </label>
+                <br/>
                 <input 
                     name = "password"
                     type = "password"
                     placeholder = "Password"
                     onChange = {handleChange}
                     required
+                    className='loginField'
                 />
                 {isSignup && (
                     <div className = "authFormFieldsContentI">
                         <label htmlFor = "password">
                             Confirm Password
                         </label>
+                        <br/>
                         <input 
                             name = "confirmPassword"
                             type = "password"
                             placeholder = "Confirm Password"
                             onChange = {handleChange}
                             required
+                            className='loginField'
                         />
                 </div>
                 )}
                 <div className = "authFormFieldsContentB">
-                    <button>{isSignup ? "Sign Up" : "Sign In"}</button>
+                    <button className='authFormSubmit'>{isSignup ? "Sign Up" : "Sign In"}</button>
                 </div>
             </form>
             <div className = "authFormFieldsChange">
@@ -118,11 +123,15 @@ const LogIn = ({isLoggedIn, setLoggedIn, getAccountId, setAccountId}) => {
                     <p>{error}</p>
                 </center>
             </div>
-            This website does not work properly with Firefox, please use Chrome or a different browser.
-            <br/>
-            If you want to use Firefox you will have to go to about:config and change "network.cors_preflight.allow_client_cert:" to true
-            <br/>
-            This website uses the free tier or render to host the server side. Please allow for around a minute for it to start up.
+            </center>
+            
+            <div className='extraText'>
+                    This website does not work properly with Firefox, please use Chrome or a different browser.
+                    <br/>
+                    If you want to use Firefox you will have to go to about:config and change "network.cors_preflight.allow_client_cert:" to true
+                    <br/>
+                    This website uses the free tier or render to host the server side. Please allow for around a minute for it to start up.
+            </div>
     </div>
   )
 }
