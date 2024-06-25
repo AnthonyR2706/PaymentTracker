@@ -147,8 +147,8 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
     }
 
     return (
-        <div className='TrackerContainer'>
-           <table>
+        <div className='trackerContainer'>
+           <table className='invoiceTable'>
             <tr key={"header"}>
                 <th>Invoice ID</th>
                 <th>Client</th>
@@ -156,6 +156,8 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
                 <th>Date</th>
                 <th>Price</th>
                 <th>Paid</th>
+                <th></th>
+                <th></th>
             </tr>
             {getData.map((item) => (
                 <tr key={item.invoiceId}>
@@ -167,15 +169,19 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
                 </tr>
             ))}
             </table>
-            <form className="contactForm">
+            <form className="contentForm">
                 <label>Client</label>
                 <input id="client" name="client" value={getClient} onChange={(e) => setClient(e.target.value)} required></input>
+                <br/>
                 <label>Description</label>
                 <input id="description" name="description" value={getDescription} onChange={(e) => setDescription(e.target.value)}></input>
+                <br/>
                 <label>Price</label>
                 <input id="price" name="price" value={getPrice} onChange={(e) => setPrice(e.target.value)} type="number" required></input>
+                <br/>
                 <label>Paid</label>
                 <input id="paid" name="paid" value={getPaid} onChange={(e) => setPaid(e.target.value)} type="number"></input>
+                <br/>
                 <button onClick={handleSubmit}>Add Entry</button>
             </form>
             {getError}
@@ -186,7 +192,7 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
             </div>
             <div className='editBox hidden' id='editBox'>
                 <button onClick={toggleEdit}>Cancel</button>
-                <form className="contactForm">
+                <form className="contentForm">
                 <label>Client</label>
                 <input 
                     name="client" 
@@ -218,7 +224,7 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
                 <button type='button' onClick={handleEdit}>Confirm</button>
             </form>
             </div>
-            <div>
+            <div className='logOutButton'>
                 <button onClick={handleLogOut}>Log Out</button>
             </div>  
         </div>

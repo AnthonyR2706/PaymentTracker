@@ -18,35 +18,68 @@ body {
     padding: .5rem;
     color: $Quaternary
   }
+  .logOutButton {
+    top: 5px;
+    right: 5px;
+    position: absolute;
+  }
+  .trackerContainer {
+    display: flex;
+    background: pink;
+    .invoiceTable {
+      margin-left: 50px;
+      font-size: 15px;
+      border-collapse: collapse;
+      th,td {
+        border-spacing: 0px;
+        border-collapse: collapse;
+        border: 1px solid black;
+        margin: 0px 0px;
+        padding: 10px 10px;
+      }
+    }
+    .contentForm {
+      width: 500px;
+    }
+  }
   .formContainer {
+    position: relative;
     background: $Secondary;
     font-size: 20px;
     font-weight: bold;
-    width: 30%;
+    width: 35rem;
     min-width: 300px;
     margin-right: auto;
     margin-left: auto;
-    margin-top: 20px;
+    margin-top: 5%;
     padding: 20px;
-    height: 100%;
+    height: 25rem;
     .loginField {
       background: $Quaternary;
-      font-size: 15px;
-      width: 50%;
+      font-size: 20px;
+      width: 18rem;
       height: 30px;
       margin: 10px;
+      text-indent: 10px; 
       border: none;
-      background-clip: content-box
+      background-clip: content-box;
     }
     .authFormFieldsContentB {
-      width: 50%;
+      width: 18rem;
       padding: 2px;
       margin: 10px;
       .authFormSubmit {
+        margin-top: 10px;
         border: none;
         width: 100%;
         height: 30px;
+        font-size: 15px;
       }
+    }
+    .authFormFieldsChange {
+      position: absolute;
+      bottom: 5px;
+      width: calc(100% - 40px);
     }
     .authFromFieldsSwitch {
       cursor: pointer;
@@ -62,11 +95,7 @@ body {
     right: 10px;
   } 
 }
-th,td {
-    border: 1px solid black;
-    margin: 0px 0px;
-    padding: 5px 5px;
-}
+
 .invalid {
   border: 4px solid red;
 }
