@@ -5,11 +5,21 @@ const App = () => {
   const [isLoggedIn, setLoggedIn] = useState(false)
   const [getAccountId, setAccountId] = useState('')
 
+  const handleLogOut = () => {
+    setAccountId('')
+    setLoggedIn(false)
+}
 
   return (
     <div>
         <div className='app_wrapper'>
-            <h1 className='appHeader'>Payment Tracker</h1>
+            <h1 className='appHeader'>Payment Tracker
+              {isLoggedIn && 
+                <div className='logOutButton' onClick={handleLogOut}>
+                  Log Out
+                </div> 
+              }
+            </h1>
             {isLoggedIn ? 
             <Tracker
               getAccountId = {getAccountId}

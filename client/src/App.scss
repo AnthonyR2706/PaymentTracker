@@ -9,6 +9,10 @@ body {
   padding: 0;
   height: auto;
   background: $Primary;
+  box-sizing: border-box;
+  button {
+    cursor: pointer;
+  }
   .app__wrapper {
     padding-left: calc(100vw - 100%);
   }
@@ -16,13 +20,21 @@ body {
     background: $Tertiary;
     margin: 0;
     padding: .5rem;
-    color: $Quaternary
+    color: $Quaternary;
+    .logOutButton {
+      float: right;
+      height: 100%;
+      cursor: pointer;
+      padding-left: 5px;
+      padding-right: 5px;
+      background: $Quaternary;
+      color: $Tertiary;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      }
   }
-  .logOutButton {
-    top: 5px;
-    right: 5px;
-    position: absolute;
-  }
+  
   .trackerContainer {
     display: flex;
     background: pink;
@@ -37,6 +49,17 @@ body {
         margin: 0px 0px;
         padding: 10px 10px;
       }
+      .tableButtonContainer{
+        cursor: pointer;
+        background: lightgray;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .tableButtonContainer:hover{
+        background: grey;
+      }
+      
     }
     .contentForm {
       width: 500px;

@@ -17,7 +17,7 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
         price: "",
         paid: "",
     })
-    const [getHidden, sethidden] = useState(true)
+    const [isEdit, setEdit] = useState(false)
 
     // const UserSchema = new mongoose.Schema({
     //     name: String,
@@ -71,7 +71,7 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
     }
 
     //resets all input values
-    const setDefault= () => {
+    const setDefault = () => {
         document.getElementById("client").value = ''
         document.getElementById("description").value = ''
         document.getElementById("price").value = ''
@@ -108,8 +108,9 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
     }
 
     const toggleEdit = (key) => {
-        document.getElementById("editBox").classList.toggle('hidden')
-        if(getHidden){
+        let edit = isEdit
+        setEdit(!isEdit)
+        if(!edit){
             const data = getData
             const rowData = data[getRow(data, key)]
             setEditForm({
@@ -120,7 +121,6 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
             })
             setKey(key) 
         }
-        sethidden(!getHidden)
     }
 
     const handleEdit = () => {
@@ -141,11 +141,6 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
         setEditForm({...getEditForm, [e.target.name]: e.target.value})
     }
 
-    const handleLogOut = () => {
-        setAccountId('')
-        setLoggedIn(false)
-    }
-
     return (
         <div className='trackerContainer'>
            <table className='invoiceTable'>
@@ -164,69 +159,82 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
                 {Object.values(item).map((val) => (
                     <td>{val}</td>
                 ))}
-                <td><button onClick={e => toggleEdit(item.invoiceId)}>Edit</button></td>
-                <td><button onClick={e => toggleConfirm(item.invoiceId)}>Delete</button></td>
+                <td className='tableButtonContainer' onClick={e => toggleEdit(item.invoiceId)}>Edit</td>
+                <td className='tableButtonContainer' onClick={e => toggleConfirm(item.invoiceId)}>Delete</td>
                 </tr>
             ))}
             </table>
+            { !isEdit ? 
             <form className="contentForm">
                 <label>Client</label>
+                <br/>
                 <input id="client" name="client" value={getClient} onChange={(e) => setClient(e.target.value)} required></input>
                 <br/>
                 <label>Description</label>
+                <br/>
                 <input id="description" name="description" value={getDescription} onChange={(e) => setDescription(e.target.value)}></input>
                 <br/>
                 <label>Price</label>
+                <br/>
                 <input id="price" name="price" value={getPrice} onChange={(e) => setPrice(e.target.value)} type="number" required></input>
                 <br/>
                 <label>Paid</label>
+                <br/>
                 <input id="paid" name="paid" value={getPaid} onChange={(e) => setPaid(e.target.value)} type="number"></input>
                 <br/>
                 <button onClick={handleSubmit}>Add Entry</button>
             </form>
-            {getError}
-            <div className='confirmBox hidden' id='confirmBox'>
-                Are you sure you want to delete this entry?
-                <button onClick={toggleConfirm}>Cancel</button>
-                <button onClick={handleDelete}>Delete</button>
-            </div>
-            <div className='editBox hidden' id='editBox'>
-                <button onClick={toggleEdit}>Cancel</button>
+            :
+            <div className='editBox' id='editBox'>
                 <form className="contentForm">
                 <label>Client</label>
+                <br/>
                 <input 
                     name="client" 
                     value={getEditForm.client}
                     onChange = {handleEditFormChange}
                     required
                 ></input>
+                <br/>
                 <label>Description</label>
+                <br/>
                 <input 
                     name="description" 
                     value={getEditForm.description}
                     onChange = {handleEditFormChange}
                     required
                 ></input>
+                <br/>
                 <label>Price</label>
+                <br/>
                 <input 
                     name="price" 
                     value={getEditForm.price}
                     onChange = {handleEditFormChange}
                     required
                 ></input>
+                <br/>
                 <label>Paid</label>
+                <br/>
                 <input 
                     name="paid" 
                     value={getEditForm.paid}
                     onChange = {handleEditFormChange}
                     required
                 ></input>
+                <br/>
+                <button onClick={toggleEdit}>Cancel</button>
                 <button type='button' onClick={handleEdit}>Confirm</button>
             </form>
             </div>
-            <div className='logOutButton'>
-                <button onClick={handleLogOut}>Log Out</button>
-            </div>  
+            }
+            {getError}
+            <div className='confirmBox hidden' id='confirmBox'>
+                Are you sure you want to delete this entry?
+                <button onClick={toggleConfirm}>Cancel</button>
+                <button onClick={handleDelete}>Delete</button>
+            </div>
+             
         </div>
     )
 }
