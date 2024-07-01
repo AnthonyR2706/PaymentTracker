@@ -108,9 +108,11 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
     }
 
     const toggleEdit = (key) => {
-        let edit = isEdit
-        setEdit(!isEdit)
-        if(!edit){
+        if(key == getKey || key == -1){
+            setEdit(false)
+            setKey('') 
+        } else {
+            setEdit(true)
             const data = getData
             const rowData = data[getRow(data, key)]
             setEditForm({
@@ -119,7 +121,7 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
                 price: rowData.price,
                 paid: rowData.paid,
             })
-            setKey(key) 
+            setKey(key)
         }
     }
 
@@ -164,75 +166,86 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
                 </tr>
             ))}
             </table>
-            { !isEdit ? 
-            <form className="contentForm">
-                <label>Client</label>
-                <br/>
-                <input id="client" name="client" value={getClient} onChange={(e) => setClient(e.target.value)} required></input>
-                <br/>
-                <label>Description</label>
-                <br/>
-                <input id="description" name="description" value={getDescription} onChange={(e) => setDescription(e.target.value)}></input>
-                <br/>
-                <label>Price</label>
-                <br/>
-                <input id="price" name="price" value={getPrice} onChange={(e) => setPrice(e.target.value)} type="number" required></input>
-                <br/>
-                <label>Paid</label>
-                <br/>
-                <input id="paid" name="paid" value={getPaid} onChange={(e) => setPaid(e.target.value)} type="number"></input>
-                <br/>
-                <button onClick={handleSubmit}>Add Entry</button>
-            </form>
-            :
-            <div className='editBox' id='editBox'>
-                <form className="contentForm">
-                <label>Client</label>
-                <br/>
-                <input 
-                    name="client" 
-                    value={getEditForm.client}
-                    onChange = {handleEditFormChange}
-                    required
-                ></input>
-                <br/>
-                <label>Description</label>
-                <br/>
-                <input 
-                    name="description" 
-                    value={getEditForm.description}
-                    onChange = {handleEditFormChange}
-                    required
-                ></input>
-                <br/>
-                <label>Price</label>
-                <br/>
-                <input 
-                    name="price" 
-                    value={getEditForm.price}
-                    onChange = {handleEditFormChange}
-                    required
-                ></input>
-                <br/>
-                <label>Paid</label>
-                <br/>
-                <input 
-                    name="paid" 
-                    value={getEditForm.paid}
-                    onChange = {handleEditFormChange}
-                    required
-                ></input>
-                <br/>
-                <button onClick={toggleEdit}>Cancel</button>
-                <button type='button' onClick={handleEdit}>Confirm</button>
-            </form>
-            </div>
-            }
-            {getError}
             <div className='confirmBox hidden' id='confirmBox'>
-                Are you sure you want to delete this entry?
-                <button onClick={toggleConfirm}>Cancel</button>
-                <button onClick={handleDelete}>Delete</button>
+                <div className='confirmContent'>
+                    Are you sure you want to delete this entry?
+                    <button className='confirmButton' onClick={toggleConfirm}>Cancel</button>
+                    <button className='confirmButton deleteButton' onClick={handleDelete}>Delete</button>
+                </div>
+            </div>
+            <div className='contentFormContainer'>
+                { !isEdit ? 
+                <form className="contentForm">
+                    <label>Client</label>
+                    <br/>
+                    <input className='contentField' id="client" name="client" value={getClient} onChange={(e) => setClient(e.target.value)} required></input>
+                    <br/>
+                    <label>Description</label>
+                    <br/>
+                    <input className='contentField' id="description" name="description" value={getDescription} onChange={(e) => setDescription(e.target.value)}></input>
+                    <br/>
+                    <label>Price</label>
+                    <br/>
+                    <input className='contentField' id="price" name="price" value={getPrice} onChange={(e) => setPrice(e.target.value)} type="number" required></input>
+                    <br/>
+                    <label>Paid</label>
+                    <br/>
+                    <input className='contentField' id="paid" name="paid" value={getPaid} onChange={(e) => setPaid(e.target.value)} type="number"></input>
+                    <br/>
+                    <button onClick={handleSubmit}>Add Entry</button>
+                </form>
+                :
+                <div className='editBox' id='editBox'>
+                    <form className="contentForm">
+                        <label>Client</label>
+                        <br/>
+                        <input
+                            className='contentField' 
+                            name="client" 
+                            value={getEditForm.client}
+                            onChange = {handleEditFormChange}
+                            required
+                        ></input>
+                        <br/>
+                        <label>Description</label>
+                        <br/>
+                        <input
+                            className='contentField' 
+                            name="description" 
+                            value={getEditForm.description}
+                            onChange = {handleEditFormChange}
+                            required
+                        ></input>
+                        <br/>
+                        <label>Price</label>
+                        <br/>
+                        <input 
+                            className='contentField' 
+                            name="price" 
+                            value={getEditForm.price}
+                            onChange = {handleEditFormChange}
+                            required
+                        ></input>
+                        <br/>
+                        <label>Paid</label>
+                        <br/>
+                        <input 
+                            className='contentField' 
+                            name="paid" 
+                            value={getEditForm.paid}
+                            onChange = {handleEditFormChange}
+                            required
+                        ></input>
+                        <br/>
+                        <button onClick={() => toggleEdit(getKey)}>Cancel</button>
+                        <button type='button' onClick={handleEdit}>Confirm</button>
+                    </form>
+                </div>
+                }
+            </div>
+            <br/>
+            <div className='errorText'>
+                {getError}
             </div>
              
         </div>
