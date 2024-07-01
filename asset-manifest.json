@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/PaymentTracker/static/css/main.29dbccc6.css",
-    "main.js": "/PaymentTracker/static/js/main.1cb424d0.js",
+    "main.css": "/PaymentTracker/static/css/main.83ba90e1.css",
+    "main.js": "/PaymentTracker/static/js/main.871d9d8f.js",
     "index.html": "/PaymentTracker/index.html",
-    "main.29dbccc6.css.map": "/PaymentTracker/static/css/main.29dbccc6.css.map",
-    "main.1cb424d0.js.map": "/PaymentTracker/static/js/main.1cb424d0.js.map"
+    "main.83ba90e1.css.map": "/PaymentTracker/static/css/main.83ba90e1.css.map",
+    "main.871d9d8f.js.map": "/PaymentTracker/static/js/main.871d9d8f.js.map"
   },
   "entrypoints": [
-    "static/css/main.29dbccc6.css",
-    "static/js/main.1cb424d0.js"
+    "static/css/main.83ba90e1.css",
+    "static/js/main.871d9d8f.js"
   ]
 }
