@@ -192,7 +192,7 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
                     <br/>
                     <input className='contentField' id="paid" name="paid" value={getPaid} onChange={(e) => setPaid(e.target.value)} type="number"></input>
                     <br/>
-                    <button onClick={handleSubmit}>Add Entry</button>
+                    <button className='formButton' onClick={handleSubmit}>Add Entry</button>
                 </form>
                 :
                 <div className='editBox' id='editBox'>
@@ -237,8 +237,9 @@ const Tracker = ({getAccountId, setAccountId, setLoggedIn}) => {
                             required
                         ></input>
                         <br/>
-                        <button onClick={() => toggleEdit(getKey)}>Cancel</button>
-                        <button type='button' onClick={handleEdit}>Confirm</button>
+                        <button className='formButton cancelButton' onClick={() => toggleEdit(getKey)}>Cancel</button>
+                        <button className='formButton' onClick={handleEdit}>Confirm</button>
+                        
                     </form>
                 </div>
                 }

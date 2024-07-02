@@ -116,11 +116,12 @@ const LogIn = ({isLoggedIn, setLoggedIn, getAccountId, setAccountId}) => {
             </form>
             <div className = "authFormFieldsChange">
                 <center>
+                    <p className='errorText'>{error}</p>
                     {isSignup ? "Already signed up?" : "Don't have an account?"}
                     <p className = "authFromFieldsSwitch" onClick = {switchMode}>
                         {isSignup ? "Sign In Instead" : "Sign Up Instead"}
                     </p>
-                    <p>{error}</p>
+                    
                 </center>
             </div>
             </center>
